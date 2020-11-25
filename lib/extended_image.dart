@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart' as package;
 
-class ExtendedImage extends package.ExtendedImage {
-  @override
-  final BoxConstraints constraints;
+enum ImageDimension {
+  square, // 1:1
+  banner // 700:277
+}
 
+class ExtendedImage extends package.ExtendedImage {
   ExtendedImage(String url,
-      {double width,
+      {ImageDimension dimension,
+      double width,
       double height,
       bool cache = true,
       ExtendedImagePlaceholder placeholder})
-      : constraints = BoxConstraints.tightFor(width: width, height: height),
+      : assert((width == null && height == null) ||
+            (width != null && height != null)),
         super.network(url,
-            width: width,
-            height: height,
-            cache: cache,
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+            constraints: BoxConstraints.tightFor(height: height, width: width),
             enableLoadState: false, loadStateChanged: (state) {
           if (state.extendedImageLoadState == package.LoadState.loading ||
               state.extendedImageLoadState == package.LoadState.failed) {
@@ -26,18 +30,23 @@ class ExtendedImage extends package.ExtendedImage {
 
 class ExtendedImagePlaceholder extends StatelessWidget {
   final int alpha;
-  final EdgeInsets padding;
+  final double scale;
+  final Alignment alignment;
 
-  const ExtendedImagePlaceholder({this.alpha, this.padding});
+  const ExtendedImagePlaceholder(
+      {this.alpha, this.scale = 0.7, this.alignment = Alignment.topCenter});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Colors.orange.withAlpha(alpha)),
-      padding: padding,
-      child: Image.asset(
-        'assets/placeholder_image.png',
-        color: Colors.orange.withAlpha(alpha + 10),
+      alignment: alignment,
+      child: Transform.scale(
+        scale: scale,
+        child: Image.asset(
+          'assets/placeholder_image.png',
+          color: Colors.orange.withAlpha(alpha + 10),
+        ),
       ),
     );
   }
