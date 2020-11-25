@@ -24,16 +24,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15),
-          child: Column(
-            children: <Widget>[
-              SimpleImage(),
-            ],
-          ),
-        ),
-      ),
+      body: Center(child: SimpleImage()),
     );
   }
 }

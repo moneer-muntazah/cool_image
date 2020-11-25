@@ -5,12 +5,13 @@ class SimpleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExtendedImage(
-      'https://via.placeholder.com/80/150',
-      height: 100,
-      width: 100,
+      'https://placeimg.com/640/400/any',
+      context: context,
+      ratio: ExtendedImageRatio.eightXFive,
+      width: 320,
+      height: 200,
       placeholder: ExtendedImagePlaceholder(
         alpha: 100,
-        // padding: const EdgeInsets.fromLTRB(15, 25, 15, 25),
       ),
     );
   }
