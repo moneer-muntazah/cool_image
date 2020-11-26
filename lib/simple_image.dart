@@ -7,7 +7,6 @@ class SimpleImage extends StatelessWidget {
     return ExtendedImage(
       // 'https://placeimg.com/2000/1250/any',
       'https://www.wallpapertip.com/wmimgs/47-478400_night-nature-wallpaper.jpg',
-      context: context,
       // ratio: ExtendedImageRatio.eightXFive,
       width: 320,
       height: 200,

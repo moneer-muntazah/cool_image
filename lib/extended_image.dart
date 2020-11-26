@@ -22,7 +22,7 @@ class ExtendedImageRatio {
 /// Specifying the [ratio] property helps optimize the image memory footprint.
 class ExtendedImage extends package.ExtendedImage {
   ExtendedImage(String url,
-      {@required BuildContext context,
+      {
       ExtendedImageRatio ratio,
       double width,
       double height,
@@ -42,20 +42,14 @@ class ExtendedImage extends package.ExtendedImage {
             cache: false,
             cacheWidth: () {
               final x = ratio != null && width != null && height != null
-                  ? (width <= MediaQuery.of(context).size.width
-                          ? width
-                          : MediaQuery.of(context).size.width)
-                      .round()
-                      .toInt()
+                  ? (width >= height ? width : height).round().toInt()
                   : null;
               print("width: $x");
               return x;
             }(),
             cacheHeight: () {
               final x = ratio != null && width != null && height != null
-                  ? ((width <= MediaQuery.of(context).size.width
-                              ? width
-                              : MediaQuery.of(context).size.width) *
+                  ? ((width >= height ? width : height) *
                           ratio.denominator /
                           ratio.numerator)
                       .round()
