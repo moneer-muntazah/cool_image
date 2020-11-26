@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'simple_image.dart';
+import 'image_screen.dart';
+import 'image_column.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +26,28 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(child: SimpleImage()),
+      // body: Center(child: SimpleImage()),
+      body: Center(
+        child: FloatingActionButton(
+          child: Text("ImageScreen", style: TextStyle(fontSize: 8)),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ImageScreen()));
+          },
+        ),
+      ),
+      // body: Center(
+      //   child: FloatingActionButton(
+      //     child: Text(
+      //       "ImageColumn",
+      //       style: TextStyle(fontSize: 8),
+      //     ),
+      //     onPressed: () {
+      //       Navigator.push(context,
+      //           MaterialPageRoute(builder: (context) => ImageColumn()));
+      //     },
+      //   ),
+      // ),
     );
   }
 }

@@ -32,33 +32,46 @@ class ExtendedImage extends package.ExtendedImage {
       : assert((width == null && height == null && ratio == null) ||
             (width != null && height != null)),
         super.network(url,
+            enableMemoryCache: true,
+            clearMemoryCacheWhenDispose: true,
+            clearMemoryCacheIfFailed: true,
             fit: fit,
             alignment: Alignment.center,
             width: width,
             height: height,
-            cacheWidth: ratio != null && width != null && height != null
-                ? (width <= MediaQuery.of(context).size.width
-                        ? width
-                        : MediaQuery.of(context).size.width)
-                    .round()
-                    .toInt()
-                : null,
-            cacheHeight: ratio != null && width != null && height != null
-                ? ((width <= MediaQuery.of(context).size.width
-                            ? width
-                            : MediaQuery.of(context).size.width) *
-                        ratio.denominator /
-                        ratio.numerator)
-                    .round()
-                    .toInt()
-                : null,
-            enableLoadState: false, loadStateChanged: (state) {
-          if (state.extendedImageLoadState == package.LoadState.loading ||
-              state.extendedImageLoadState == package.LoadState.failed) {
-            return placeholder;
-          }
-          return state.completedWidget;
-        });
+            cache: false,
+            cacheWidth: () {
+              final x = ratio != null && width != null && height != null
+                  ? (width <= MediaQuery.of(context).size.width
+                          ? width
+                          : MediaQuery.of(context).size.width)
+                      .round()
+                      .toInt()
+                  : null;
+              print("width: $x");
+              return x;
+            }(),
+            cacheHeight: () {
+              final x = ratio != null && width != null && height != null
+                  ? ((width <= MediaQuery.of(context).size.width
+                              ? width
+                              : MediaQuery.of(context).size.width) *
+                          ratio.denominator /
+                          ratio.numerator)
+                      .round()
+                      .toInt()
+                  : null;
+              print("height: $x");
+              return x;
+            }(),
+            enableLoadState: false,
+            loadStateChanged: (state) {
+              if (state.extendedImageLoadState == package.LoadState.loading ||
+                  state.extendedImageLoadState == package.LoadState.failed) {
+                return placeholder;
+              }
+              return state.completedWidget;
+            });
 }
 
 class ExtendedImagePlaceholder extends StatelessWidget {
